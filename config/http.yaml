@@ -1,0 +1,19 @@
+gox_http_request_response_security_config:
+  enable_request_logging: ${ENABLE_REQ_RESPONSE_LOGGING}
+  enable_request_logging_to_console: ${ENABLE_REQ_RESPONSE_LOGGING_TO_CONSOLE}
+  ignore_request_headers: [ "X-Tenant-ID", "X-Client-ID", "X-Client-Secret", "X-Access-Token", "X-Client-Id" ]
+  ignore_response_headers: [ "X-Tenant-ID", "X-Client-ID", "X-Client-Secret", "X-Access-Token", "X-Client-Id" ]
+  ignore_keys_in_request: [ "account_no", "mid" ]
+  ignore_keys_in_response: [ "account_no",  "mid" ]
+
+server_config:
+  servers:
+    jsonplaceholder:
+      host: jsonplaceholder.typicode.com
+      port: -1
+      https: true
+  apis:
+    getPosts:
+      method: GET
+      path: /todos/{postId}
+      server: jsonplaceholder

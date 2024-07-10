@@ -1,0 +1,29 @@
+messaging_config:
+  enabled: true
+  producers:
+    metrics:
+      enabled: true
+      type: kafka
+      async: true
+      topic: $KAFKA_MESSAGING_METRIC_TOPIC
+      endpoint: $KAFKA_MESSAGING_BROKER_ENDPOINT
+      session.timeout.ms: 1000
+      message_timeout_ms: 1000
+      concurrency: 5
+      properties:
+        acks: 0
+        linger.ms: 1000
+        batch.size: 65536
+    requestResponseLogging:
+      enabled: true
+      type: kafka
+      async: true
+      topic: $KAFKA_MESSAGING_REQ_RESP_LOGGING_TOPIC
+      endpoint: $KAFKA_MESSAGING_BROKER_ENDPOINT
+      session.timeout.ms: 1000
+      message_timeout_ms: 1000
+      concurrency: 5
+      properties:
+        acks: 0
+        linger.ms: 1000
+        batch.size: 65536

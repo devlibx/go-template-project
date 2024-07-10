@@ -1,0 +1,26 @@
+app:
+  name: $APP_NAME
+  http_port: $HTTP_PORT
+  env: $DP_RUN_ENV
+  enable_pprof: true
+  request_read_timeout_ms: "env:int: dev=10000; stage=10000; prod=5000; default=5000"
+  request_write_timeout_ms: "env:int: dev=10000; stage=10000; prod=5000; default=5000"
+  outstanding_request_timeout_ms: "env:int: dev=10000; stage=10000; prod=5000; default=5000"
+  idle_timeout_ms: "env:int: dev=301000; stage=301000; prod=301000; default=301000"
+  properties:
+    server-time-logging-enabled: true
+
+metric:
+  enabled: false
+  prefix: "env:string: dev=app; stage=app; prod=app; default=app"
+  reporting_interval_ms: 1000
+  enable_prometheus: true
+  enable_statsd: false
+  statsd:
+    address: "env:string: dev=localhost:80; stage=localhost:80; prod=localhost:80"
+    flush_interval_ms: 10
+    flush_bytes: 1440
+  tracing:
+    enabled: false
+
+
