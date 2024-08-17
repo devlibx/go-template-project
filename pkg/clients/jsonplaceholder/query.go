@@ -2,8 +2,8 @@ package jsonplaceholderClient
 
 import (
 	"context"
-	goxHttpApi "github.com/devlibx/gox-http/v3/api"
-	"github.com/devlibx/gox-http/v3/command"
+	goxHttpApi "github.com/devlibx/gox-http/v4/api"
+	"github.com/devlibx/gox-http/v4/command"
 )
 
 func (c *client) GetPosts(ctx context.Context, postId string) (*PostDto, error) {

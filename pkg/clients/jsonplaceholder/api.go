@@ -3,7 +3,7 @@ package jsonplaceholderClient
 import (
 	"context"
 	"github.com/devlibx/gox-base/v2"
-	goxHttpApi "github.com/devlibx/gox-http/v3/api"
+	goxHttpApi "github.com/devlibx/gox-http/v4/api"
 )
 
 type Client interface {

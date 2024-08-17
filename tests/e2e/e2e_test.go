@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	httpHelper "github.com/devlibx/gox-base/v2/http_helper"
-	httpCommand "github.com/devlibx/gox-http/v3/command/http"
+	httpCommand "github.com/devlibx/gox-http/v4/command/http"
 	"github.com/stretchr/testify/suite"
 	"github.com/zeebo/assert"
 	env "go-template-project"
