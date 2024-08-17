@@ -1,11 +1,11 @@
 package command
 
 import (
-	goxBaseConfig "github.com/devlibx/gox-base/config"
-	goxBaseMetrics "github.com/devlibx/gox-base/metrics"
-	goxHttpApi "github.com/devlibx/gox-http/v2/api"
-	goxHttp "github.com/devlibx/gox-http/v2/command"
-	goxMessaging "github.com/devlibx/gox-messaging"
+	goxBaseConfig "github.com/devlibx/gox-base/v2/config"
+	goxBaseMetrics "github.com/devlibx/gox-base/v2/metrics"
+	goxHttpApi "github.com/devlibx/gox-http/v3/api"
+	goxHttp "github.com/devlibx/gox-http/v3/command"
+	goxMessaging "github.com/devlibx/gox-messaging/v2"
 )
 
 type ApplicationConfig struct {

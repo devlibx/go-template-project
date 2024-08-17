@@ -2,7 +2,7 @@ package post
 
 import (
 	"context"
-	"github.com/devlibx/gox-base"
+	"github.com/devlibx/gox-base/v2"
 )
 
 type Service interface {

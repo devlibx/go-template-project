@@ -2,9 +2,9 @@ package consumers
 
 import (
 	"context"
-	"github.com/devlibx/gox-base"
-	goxMessaging "github.com/devlibx/gox-messaging"
-	"github.com/devlibx/gox-messaging/factory"
+	"github.com/devlibx/gox-base/v2"
+	goxMessaging "github.com/devlibx/gox-messaging/v2"
+	"github.com/devlibx/gox-messaging/v2/factory"
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 )

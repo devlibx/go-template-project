@@ -3,8 +3,8 @@ package e2e
 import (
 	"context"
 	"fmt"
-	httpHelper "github.com/devlibx/gox-base/http_helper"
-	httpCommand "github.com/devlibx/gox-http/v2/command/http"
+	httpHelper "github.com/devlibx/gox-base/v2/http_helper"
+	httpCommand "github.com/devlibx/gox-http/v3/command/http"
 	"github.com/stretchr/testify/suite"
 	"github.com/zeebo/assert"
 	env "go-template-project"

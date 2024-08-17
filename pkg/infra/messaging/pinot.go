@@ -2,8 +2,8 @@ package consumers
 
 import (
 	"context"
-	"github.com/devlibx/gox-base/metrics"
-	messaging "github.com/devlibx/gox-messaging"
+	"github.com/devlibx/gox-base/v2/metrics"
+	messaging "github.com/devlibx/gox-messaging/v2"
 	"go.uber.org/zap"
 )
 
