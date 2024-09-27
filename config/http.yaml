@@ -17,3 +17,4 @@ server_config:
       method: GET
       path: /todos/{postId}
       server: jsonplaceholder
+      timeout: 100000

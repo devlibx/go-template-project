@@ -2,6 +2,7 @@ package e2e
 
 import (
 	"fmt"
+	"github.com/devlibx/gox-base/v2"
 	"github.com/devlibx/gox-base/v2/serialization"
 	"github.com/zeebo/assert"
 	"testing"

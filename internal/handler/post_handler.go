@@ -14,6 +14,10 @@ type PostHandler struct {
 	PostService post.Service
 }
 
+type name struct {
+	name string `json:"name" validate:"required"`
+}
+
 func (h *PostHandler) GetPost(c *gin.Context) {
 	span, ctx := opentracing.StartSpanFromContext(c, "postHandler.GetPost")
 	defer span.Finish()
