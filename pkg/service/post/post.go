@@ -2,8 +2,8 @@ package post
 
 import (
 	"context"
+	jsonplaceholderClient "github.com/devlibx/go-template-project/pkg/clients/jsonplaceholder"
 	"github.com/devlibx/gox-base/v2"
-	jsonplaceholderClient "go-template-project/pkg/clients/jsonplaceholder"
 )
 
 type postServiceImpl struct {

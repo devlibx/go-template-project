@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"github.com/devlibx/go-template-project/cmd/server/command"
+	consumers "github.com/devlibx/go-template-project/pkg/infra/messaging"
 	httpCommand "github.com/devlibx/gox-http/v4/command/http"
-	"go-template-project/cmd/server/command"
-	consumers "go-template-project/pkg/infra/messaging"
 	"log/slog"
 	"os"
 )

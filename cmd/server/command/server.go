@@ -1,13 +1,13 @@
 package command
 
 import (
+	"github.com/devlibx/go-template-project/internal/handler"
 	"github.com/devlibx/gox-base/v2"
 	goxBaseConfig "github.com/devlibx/gox-base/v2/config"
 	"github.com/devlibx/gox-base/v2/server/common"
 	goxHttpApi "github.com/devlibx/gox-http/v4/api"
 	stats "github.com/devlibx/gox-metrics/v2/common"
 	"github.com/gin-gonic/gin"
-	"go-template-project/internal/handler"
 	"go.uber.org/fx"
 	gintrace "gopkg.in/DataDog/dd-trace-go.v1/contrib/gin-gonic/gin"
 	"net/http"

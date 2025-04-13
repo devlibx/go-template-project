@@ -1,7 +1,7 @@
 package service
 
 import (
-	"go-template-project/pkg/service/post"
+	"github.com/devlibx/go-template-project/pkg/service/post"
 	"go.uber.org/fx"
 )
 

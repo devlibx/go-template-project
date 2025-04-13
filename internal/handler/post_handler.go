@@ -1,10 +1,10 @@
 package handler
 
 import (
+	"github.com/devlibx/go-template-project/pkg/service/post"
 	"github.com/devlibx/gox-base/v2"
 	"github.com/gin-gonic/gin"
 	"github.com/opentracing/opentracing-go"
-	"go-template-project/pkg/service/post"
 	"go.uber.org/fx"
 )
 

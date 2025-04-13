@@ -1,8 +1,28 @@
 # Go Template Project
 
+[![Go Reference](https://pkg.go.dev/badge/github.com/harishbohara/go-template-project.svg)](https://pkg.go.dev/github.com/harishbohara/go-template-project)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Go Version](https://img.shields.io/github/go-mod/go-version/harishbohara/go-template-project?filename=go.mod)
+
 A production-ready Go server template project with a clean architecture, configuration management, and end-to-end testing setup.
 
-## Features
+## 🚀 Quick Start
+
+```bash
+# Clone the repository
+git clone https://github.com/devlibx/go-template-project.git
+
+# Navigate to the project
+cd go-template-project
+
+# Install dependencies
+go mod tidy
+
+# Run the server in development mode
+sh build/run-local-dev.sh
+```
+
+## ✨ Features
 
 - 🏗️ Clean Architecture
 - ⚙️ Environment-based Configuration
@@ -15,17 +35,17 @@ A production-ready Go server template project with a clean architecture, configu
 - 🔍 Performance Profiling
 - 📨 Message Queue Integration
 
-## Prerequisites
+## 📋 Prerequisites
 
 - Go 1.19 or higher
 - Git
 - Kafka (for messaging features)
 
-## Installation
+## 📦 Installation
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/go-template-project.git
+git clone https://github.com/devlibx/go-template-project.git
 
 # Navigate to the project directory
 cd go-template-project
@@ -34,7 +54,7 @@ cd go-template-project
 go mod tidy
 ```
 
-## Configuration
+## ⚙️ Configuration
 
 The project uses YAML configuration files located in the `config/` directory:
 
@@ -305,7 +325,7 @@ metric:
 
 Access Prometheus metrics at: `http://localhost:8080/metrics`
 
-## Usage
+## 🛠️ Usage
 
 ### Development
 
@@ -323,7 +343,7 @@ To run in staging environment:
 sh build/run-local-stage.sh
 ```
 
-## Project Structure
+## 📂 Project Structure
 
 ```
 .
@@ -333,13 +353,14 @@ sh build/run-local-stage.sh
 │   └── tools/             # CLI tools
 ├── config/                # Configuration files
 ├── docs/                  # Documentation
+│   └── img/               # Images and diagrams
 ├── internal/              # Private application code
 │   └── handler/           # HTTP handlers
 └── tests/                 # Test suites
     └── e2e/              # End-to-end tests
 ```
 
-## End-to-End Tests
+## 🧪 End-to-End Tests
 
 The project includes comprehensive end-to-end tests in the `tests/e2e` directory. These tests verify the entire system's functionality by making actual HTTP requests and validating responses.
 
@@ -457,7 +478,7 @@ go test ./tests/e2e/... -v -coverprofile=coverage.out
 go tool cover -html=coverage.out
 ```
 
-## Development
+## 👨‍💻 Development
 
 ### Pre-commit Hook
 
@@ -467,7 +488,36 @@ The project includes a pre-commit hook to ensure code quality:
 sh build/pre-commit.sh
 ```
 
-## Contributing
+## 🤔 When to Use This Template
+
+This template is particularly useful for:
+
+- Microservice development where you need a solid foundation
+- Projects that require extensive configuration management
+- Applications with complex messaging requirements
+- Systems that need robust monitoring and metrics
+- Services that will scale and need performance profiling
+
+## 📊 Comparison with Alternatives
+
+| Feature | Go Template Project | Standard Go Project | Other Templates |
+|---------|:-------------------:|:-------------------:|:---------------:|
+| Clean Architecture | ✅ | ❌ | Varies |
+| Environment Config | ✅ | ❌ | ⚠️ |
+| E2E Testing | ✅ | ❌ | ⚠️ |
+| Messaging Integration | ✅ | ❌ | ❌ |
+| Metrics & Profiling | ✅ | ❌ | ⚠️ |
+| CI/CD Ready | ✅ | ❌ | ✅ |
+
+## 🗺️ Roadmap
+
+- [ ] GraphQL API support
+- [ ] Container orchestration examples
+- [ ] OpenTelemetry integration
+- [ ] Serverless deployment examples
+- [ ] Database migration tools
+
+## 👥 Contributing
 
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
@@ -475,6 +525,18 @@ sh build/pre-commit.sh
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## License
+Please read [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) for details on our code of conduct.
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+## 🙏 Acknowledgements
+
+- [Uber's fx](https://github.com/uber-go/fx) for dependency injection
+- [Testify](https://github.com/stretchr/testify) for testing
+- All [contributors](https://github.com/yourusername/go-template-project/graphs/contributors) who participated in this project
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🔒 Security
+
+If you discover a security vulnerability, please send an e-mail to security@example.com instead of using the issue tracker. All security vulnerabilities will be promptly addressed.

@@ -1,4 +1,4 @@
-module go-template-project
+module github.com/devlibx/go-template-project
 
 go 1.21
 

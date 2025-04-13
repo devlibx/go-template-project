@@ -2,9 +2,9 @@ package command
 
 import (
 	"context"
+	"github.com/devlibx/go-template-project/config"
 	"github.com/devlibx/gox-base/v2/errors"
 	"github.com/devlibx/gox-base/v2/serialization"
-	"go-template-project/config"
 	"log/slog"
 )
 
