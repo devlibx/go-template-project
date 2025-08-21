@@ -42,6 +42,7 @@ func AppMain(ctx context.Context, appConfig *ApplicationConfig) error {
 		fx.Provide(goxServer.NewFxServerShutdownHook),
 		fx.Provide(goxHttpApi.NewGoxHttpContext),
 		fx.Provide(goxCadence.NewCadenceClient),
+		fx.Provide(consumers.NewMessagingFactory),
 
 		// Services
 		service.Provider,
@@ -52,7 +53,7 @@ func AppMain(ctx context.Context, appConfig *ApplicationConfig) error {
 		// Invoke - these will execute before app starts
 		fx.Invoke(newApplicationEntryPoint),
 		fx.Invoke(postApplicationSeverStart),
-		fx.Invoke(consumers.NewMessagingFactory),
+		fx.Invoke(consumers.NewMessagingFactoryLifecycle),
 		fx.Invoke(goxCadence.NewCadenceWorkflowApiInvokerAtBoot),
 
 		// This is a server signal which is sent when server is started

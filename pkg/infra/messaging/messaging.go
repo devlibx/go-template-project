@@ -17,13 +17,7 @@ type messagingServiceImpl struct {
 	goxMessaging.Factory
 }
 
-func NewMessagingFactory(lifecycle fx.Lifecycle, cf gox.CrossFunction, configuration *goxMessaging.Configuration) (MessagingFactory, error) {
-	service := messagingServiceImpl{
-		CrossFunction: cf,
-		logger:        cf.Logger(),
-		Factory:       factory.NewMessagingFactory(cf),
-	}
-
+func NewMessagingFactoryLifecycle(lifecycle fx.Lifecycle, cf gox.CrossFunction, configuration *goxMessaging.Configuration, service MessagingFactory) {
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 
@@ -41,5 +35,13 @@ func NewMessagingFactory(lifecycle fx.Lifecycle, cf gox.CrossFunction, configura
 			return service.Stop()
 		},
 	})
+}
+
+func NewMessagingFactory(cf gox.CrossFunction) (MessagingFactory, error) {
+	service := messagingServiceImpl{
+		CrossFunction: cf,
+		logger:        cf.Logger(),
+		Factory:       factory.NewMessagingFactory(cf),
+	}
 	return &service, nil
 }
