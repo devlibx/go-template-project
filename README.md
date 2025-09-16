@@ -34,12 +34,16 @@ sh build/run-local-dev.sh
 - 📊 Metrics Integration
 - 🔍 Performance Profiling
 - 📨 Message Queue Integration
+- 🗄️ MySQL Integration with sqlc
+- 👥 User Service Example
 
 ## 📋 Prerequisites
 
 - Go 1.19 or higher
 - Git
 - Kafka (for messaging features)
+- MySQL 8.0+ (for database features)
+- sqlc (for code generation)
 
 ## 📦 Installation
 
@@ -220,6 +224,156 @@ if err != nil {
 }
 ```
 
+### Using MySQL with sqlc
+
+The project includes a complete MySQL integration with sqlc for type-safe database operations. It follows a clean architecture with read/write separation.
+
+#### Quick Setup
+
+1. **Install sqlc**:
+```bash
+make sqlc-install
+```
+
+2. **Setup MySQL and create database**:
+```bash
+# Start MySQL with Docker (optional)
+make docker-mysql
+
+# Or create database manually
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS test_db;"
+```
+
+3. **Create tables and generate code**:
+```bash
+make db-create    # Create database and tables
+make sqlc-generate # Generate Go code from SQL
+```
+
+#### Database Architecture
+
+The project uses a read/write separation pattern:
+
+```
+pkg/infra/database/mysql/
+└── user/                    # Domain-specific database
+    ├── rw/                  # Read-Write operations
+    │   ├── schema.sql       # Table definitions
+    │   ├── query.sql        # CRUD operations
+    │   └── sqlc.yaml        # sqlc configuration
+    └── ro/                  # Read-Only operations
+        ├── query.sql        # Read-only queries
+        └── sqlc.yaml        # sqlc config (reads RW schema)
+```
+
+#### Service Layer Pattern
+
+Services use a combined datastore that automatically routes to appropriate connections:
+
+```go
+// Service implementation
+type userService struct {
+    userDataStore user.UserDataStore  // Single interface for all operations
+}
+
+// Datastore interface (both read and write)
+type UserDataStore interface {
+    // Write operations (use RW connection)
+    CreateUser(ctx context.Context, req CreateUserRequest) error
+    UpdateUser(ctx context.Context, userID string, req UpdateUserRequest) error
+    DeleteUser(ctx context.Context, userID string) error
+    
+    // Read operations (use RO connection)
+    GetUserByID(ctx context.Context, userID string) (*User, error)
+    GetAllUsers(ctx context.Context) ([]*User, error)
+}
+```
+
+#### Example: User Service
+
+The project includes a complete user service example:
+
+```go
+// 1. Service Interface (pkg/service/user/api.go)
+type Service interface {
+    CreateUser(ctx context.Context, req userModels.CreateUserRequest) error
+    GetUserByID(ctx context.Context, userID string) (*userModels.User, error)
+    GetAllUsers(ctx context.Context) ([]*userModels.User, error)
+    UpdateUser(ctx context.Context, userID string, req userModels.UpdateUserRequest) error
+    DeleteUser(ctx context.Context, userID string) error
+}
+
+// 2. Domain Models (pkg/database/user/model.go)
+type User struct {
+    UserID    string    `json:"user_id"`
+    Email     string    `json:"email"`
+    Name      string    `json:"name"`
+    Status    string    `json:"status"`
+    CreatedAt time.Time `json:"created_at"`
+    UpdatedAt time.Time `json:"updated_at"`
+}
+
+// 3. Service Implementation (pkg/service/user/user.go)
+func (u *userServiceImpl) CreateUser(ctx context.Context, req userModels.CreateUserRequest) error {
+    return u.userDataStore.CreateUser(ctx, req) // Uses RW connection
+}
+
+func (u *userServiceImpl) GetUserByID(ctx context.Context, userID string) (*userModels.User, error) {
+    return u.userDataStore.GetUserByID(ctx, userID) // Uses RO connection
+}
+```
+
+#### Configuration
+
+Add database configuration to your `app.yaml`:
+
+```yaml
+# Write operations database
+orders_data_store:
+  database: "test_db"
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: "credroot"
+  max_idle_connections: 10
+  max_open_connections: 10
+  connection_max_lifetime_sec: 60
+  connection_max_idle_time_sec: 60
+
+# Read operations database
+order_ro_data_store:
+  database: "test_db"
+  host: "localhost"
+  port: 3306
+  user: "root"
+  password: "credroot"
+  max_idle_connections: 10
+  max_open_connections: 10
+  connection_max_lifetime_sec: 60
+  connection_max_idle_time_sec: 60
+```
+
+#### Available Make Commands
+
+```bash
+make sqlc-generate     # Generate Go code from SQL
+make db-create         # Create database and tables
+make db-reset          # Drop and recreate database
+make db-status         # Show database status
+make dev-setup         # Complete development setup
+make mysql-integration # Show integration guide
+```
+
+#### Adding New Database Integration
+
+For detailed instructions on adding new database integrations, see: [`pkg/infra/database/readme.md`](pkg/infra/database/readme.md)
+
+The documentation provides:
+- Complete step-by-step integration guide
+- Architecture explanation
+- Best practices and patterns
+- Working examples you can copy-paste to Claude for automatic generation
+
 ### Using Metrics
 
 Configure metrics in `app.yaml`:
@@ -347,17 +501,36 @@ sh build/run-local-stage.sh
 
 ```
 .
-├── build/                  # Build and runtime scripts
-├── cmd/                    # Application entry points
-│   ├── server/            # Server application
-│   └── tools/             # CLI tools
-├── config/                # Configuration files
-├── docs/                  # Documentation
-│   └── img/               # Images and diagrams
-├── internal/              # Private application code
-│   └── handler/           # HTTP handlers
-└── tests/                 # Test suites
-    └── e2e/              # End-to-end tests
+├── build/                          # Build and runtime scripts
+├── cmd/                            # Application entry points
+│   ├── server/                    # Server application
+│   └── tools/                     # CLI tools
+├── config/                        # Configuration files
+├── docs/                          # Documentation
+│   └── img/                       # Images and diagrams
+├── internal/                      # Private application code
+│   └── handler/                   # HTTP handlers
+├── pkg/                           # Public application code
+│   ├── clients/                   # External service clients
+│   ├── database/                  # Domain-specific data models
+│   │   └── user/                  # User domain models and datastores
+│   ├── infra/                     # Infrastructure layer
+│   │   └── database/              # Database infrastructure
+│   │       ├── mysql/             # MySQL-specific implementations
+│   │       │   └── user/          # User domain database layer
+│   │       │       ├── ro/        # Read-only operations
+│   │       │       └── rw/        # Read-write operations
+│   │       ├── base_config.go     # Database configuration interface
+│   │       ├── db_connections.go  # Connection management
+│   │       └── readme.md          # Database integration guide
+│   └── service/                   # Business logic services
+│       ├── post/                  # Post service (example)
+│       ├── user/                  # User service
+│       └── provider.go            # Service dependency injection
+├── tests/                         # Test suites
+│   └── e2e/                      # End-to-end tests
+├── Makefile                       # Build and database commands
+└── README.md                      # This file
 ```
 
 ## 🧪 End-to-End Tests
@@ -511,11 +684,15 @@ This template is particularly useful for:
 
 ## 🗺️ Roadmap
 
+- [x] MySQL Integration with sqlc
+- [x] User Service Example
 - [ ] GraphQL API support
 - [ ] Container orchestration examples
 - [ ] OpenTelemetry integration
 - [ ] Serverless deployment examples
 - [ ] Database migration tools
+- [ ] PostgreSQL support
+- [ ] Redis caching layer
 
 ## 👥 Contributing
 
