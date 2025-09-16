@@ -334,7 +334,7 @@ orders_data_store:
   host: "localhost"
   port: 3306
   user: "root"
-  password: "credroot"
+  password: ""
   max_idle_connections: 10
   max_open_connections: 10
   connection_max_lifetime_sec: 60
@@ -346,7 +346,7 @@ order_ro_data_store:
   host: "localhost"
   port: 3306
   user: "root"
-  password: "credroot"
+  password: ""
   max_idle_connections: 10
   max_open_connections: 10
   connection_max_lifetime_sec: 60
