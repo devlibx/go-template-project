@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"github.com/devlibx/go-template-project/cmd/server/command"
+	"github.com/devlibx/go-template-project/pkg/base"
 	consumers "github.com/devlibx/go-template-project/pkg/infra/messaging"
 	httpCommand "github.com/devlibx/gox-http/v4/command/http"
 	"log/slog"
@@ -19,6 +20,6 @@ func main() {
 	slog.SetDefault(logger)
 
 	ctx := context.Background()
-	command.FullMain(ctx, make(chan bool, 10))
+	command.FullMain(ctx, make(chan bool, 10), &base.ApplicationContext{})
 	<-ctx.Done()
 }

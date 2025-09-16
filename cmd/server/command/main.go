@@ -3,12 +3,13 @@ package command
 import (
 	"context"
 	"github.com/devlibx/go-template-project/config"
+	"github.com/devlibx/go-template-project/pkg/base"
 	"github.com/devlibx/gox-base/v2/errors"
 	"github.com/devlibx/gox-base/v2/serialization"
 	"log/slog"
 )
 
-func FullMain(ctx context.Context, started chan bool) {
+func FullMain(ctx context.Context, started chan bool, applicationContext *base.ApplicationContext) {
 
 	// Read merged configs
 	fullConfig, err := config.GetEnvExpandedMergedYamlApplicationConfig()
@@ -26,7 +27,7 @@ func FullMain(ctx context.Context, started chan bool) {
 	slog.Info("Http Port", slog.Int("port", appConfig.App.HttpPort))
 
 	// Start server
-	if err = AppMain(ctx, &appConfig); err != nil {
+	if err = AppMain(ctx, &appConfig, applicationContext); err != nil {
 		panic(err)
 	}
 	started <- true

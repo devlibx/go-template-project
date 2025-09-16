@@ -2,8 +2,8 @@ package user
 
 import (
 	"context"
-	ordersDataStore "github.com/devlibx/go-template-project/pkg/infra/database/mysql/user/rw"
 	orderRoDataStore "github.com/devlibx/go-template-project/pkg/infra/database/mysql/user/ro"
+	ordersDataStore "github.com/devlibx/go-template-project/pkg/infra/database/mysql/user/rw"
 	"github.com/devlibx/gox-base/v2"
 )
 
@@ -13,7 +13,7 @@ type UserDataStore interface {
 	CreateUser(ctx context.Context, arg CreateUserRequest) error
 	UpdateUser(ctx context.Context, userID string, arg UpdateUserRequest) error
 	DeleteUser(ctx context.Context, userID string) error
-	
+
 	// Read operations (use RO connection)
 	GetUserByID(ctx context.Context, userID string) (*User, error)
 	GetAllUsers(ctx context.Context) ([]*User, error)
@@ -49,7 +49,7 @@ func (u *userDataStoreImpl) CreateUser(ctx context.Context, arg CreateUserReques
 	// Using CreateOrder as underlying storage (demo purposes)
 	return u.rwQuerier.CreateOrder(ctx, ordersDataStore.CreateOrderParams{
 		OrderID:  arg.UserID,
-		OrderQty: 1,        // Default value
+		OrderQty: 1,         // Default value
 		Amount:   arg.Email, // Using Amount field to store email
 	})
 }
@@ -126,10 +126,10 @@ func (o *orderDataStoreImpl) GetOrderByID(ctx context.Context, orderID string) (
 
 // Constructor functions
 func NewUserDataStore(
-	cf gox.CrossFunction, 
-	rwQuerier ordersDataStore.Querier, 
+	cf gox.CrossFunction,
+	rwQuerier ordersDataStore.Querier,
 	rwQueries *ordersDataStore.Queries,
-	roQuerier orderRoDataStore.Querier, 
+	roQuerier orderRoDataStore.Querier,
 	roQueries *orderRoDataStore.Queries,
 ) UserDataStore {
 	return &userDataStoreImpl{

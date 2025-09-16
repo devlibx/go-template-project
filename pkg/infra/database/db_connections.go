@@ -8,6 +8,7 @@ import (
 	ordersDataStore "github.com/devlibx/go-template-project/pkg/infra/database/mysql/user/rw"
 	"github.com/devlibx/gox-base/v2"
 	"github.com/devlibx/gox-base/v2/errors"
+	_ "github.com/go-sql-driver/mysql"
 	"go.uber.org/fx"
 	"time"
 )

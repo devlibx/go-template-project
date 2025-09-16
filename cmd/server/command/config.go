@@ -1,6 +1,8 @@
 package command
 
 import (
+	orderRoDataStore "github.com/devlibx/go-template-project/pkg/infra/database/mysql/user/ro"
+	ordersDataStore "github.com/devlibx/go-template-project/pkg/infra/database/mysql/user/rw"
 	goxBaseConfig "github.com/devlibx/gox-base/v2/config"
 	goxBaseMetrics "github.com/devlibx/gox-base/v2/metrics"
 	goxHttpApi "github.com/devlibx/gox-http/v4/api"
@@ -16,6 +18,9 @@ type ApplicationConfig struct {
 	MessagingConfig               *goxMessaging.Configuration               `yaml:"messaging_config"`
 	RequestResponseSecurityConfig *goxHttpApi.RequestResponseSecurityConfig `yaml:"gox_http_request_response_security_config"`
 	CadenceConfig                 *cadenceConfig.Config                     `yaml:"cadence_config"`
+
+	OrdersMysqlConfig   *ordersDataStore.MySqlConfig  `yaml:"orders_mysql_config"`
+	OrdersRoMysqlConfig *orderRoDataStore.MySqlConfig `yaml:"orders_ro_mysql_config"`
 }
 
 func (a *ApplicationConfig) SetDefaults() {

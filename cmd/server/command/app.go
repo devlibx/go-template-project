@@ -3,7 +3,9 @@ package command
 import (
 	"context"
 	"fmt"
+	"github.com/devlibx/go-template-project/pkg/base"
 	jsonplaceholderClient "github.com/devlibx/go-template-project/pkg/clients/jsonplaceholder"
+	"github.com/devlibx/go-template-project/pkg/infra/database"
 	consumers "github.com/devlibx/go-template-project/pkg/infra/messaging"
 	"github.com/devlibx/go-template-project/pkg/service"
 	"github.com/devlibx/gox-base/v2"
@@ -20,7 +22,7 @@ import (
 	"time"
 )
 
-func AppMain(ctx context.Context, appConfig *ApplicationConfig) error {
+func AppMain(ctx context.Context, appConfig *ApplicationConfig, applicationContext *base.ApplicationContext) error {
 	appConfig.SetDefaults()
 
 	var sh goxServer.ServerShutdownHook
@@ -34,6 +36,7 @@ func AppMain(ctx context.Context, appConfig *ApplicationConfig) error {
 		fx.Supply(appConfig.MessagingConfig),
 		fx.Supply(appConfig.RequestResponseSecurityConfig),
 		fx.Supply(appConfig.CadenceConfig),
+		fx.Supply(appConfig.OrdersRoMysqlConfig, appConfig.OrdersMysqlConfig),
 
 		// Common generics dependencies
 		fx.Provide(newCrossFunctionProvider),
@@ -46,6 +49,7 @@ func AppMain(ctx context.Context, appConfig *ApplicationConfig) error {
 
 		// Services
 		service.Provider,
+		database.Provider,
 
 		// Clients
 		jsonplaceholderClient.Provider,
@@ -59,6 +63,11 @@ func AppMain(ctx context.Context, appConfig *ApplicationConfig) error {
 		// This is a server signal which is sent when server is started
 		fx.Provide(func() *ServerSignal { return &ServerSignal{StartedCh: make(chan error, 5)} }),
 		fx.Populate(&sh, &serverSignal),
+
+		fx.Populate(
+			&applicationContext.GoxHttpContext,
+			&applicationContext.OrdersDataStore,
+		),
 	)
 
 	err := app.Start(ctx)

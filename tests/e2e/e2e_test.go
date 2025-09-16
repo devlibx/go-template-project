@@ -5,6 +5,7 @@ import (
 	"fmt"
 	env "github.com/devlibx/go-template-project"
 	"github.com/devlibx/go-template-project/cmd/server/command"
+	"github.com/devlibx/go-template-project/pkg/base"
 	httpHelper "github.com/devlibx/gox-base/v2/http_helper"
 	httpCommand "github.com/devlibx/gox-http/v4/command/http"
 	"github.com/stretchr/testify/suite"
@@ -18,9 +19,10 @@ import (
 type e2eTestSuite struct {
 	suite.Suite
 
-	restyClient *resty.Client
-	ctx         context.Context
-	done        context.CancelFunc
+	restyClient        *resty.Client
+	ctx                context.Context
+	done               context.CancelFunc
+	applicationContext *base.ApplicationContext
 }
 
 func (s *e2eTestSuite) SetupSuite() {
@@ -34,6 +36,8 @@ func (s *e2eTestSuite) SetupSuite() {
 		_ = os.Setenv("TEST_SERVICE", fmt.Sprintf("%d", mapping["TEST_SERVICE"]))
 	}()
 
+	s.applicationContext = &base.ApplicationContext{}
+
 	// Setup resty client
 	httpCommand.EnableRestyDebug = true
 	s.restyClient = resty.New()
@@ -46,7 +50,7 @@ func (s *e2eTestSuite) SetupSuite() {
 	s.ctx, s.done = context.WithTimeout(context.Background(), 30*time.Second)
 	ch := make(chan bool, 1)
 	go func() {
-		command.FullMain(s.ctx, ch)
+		command.FullMain(s.ctx, ch, s.applicationContext)
 	}()
 	<-ch
 }

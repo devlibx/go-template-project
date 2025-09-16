@@ -16,6 +16,7 @@ require (
 	github.com/devlibx/gox-metrics/v2 v2.0.26
 	github.com/devlibx/gox-workfkow v0.0.17
 	github.com/gin-gonic/gin v1.10.0
+	github.com/go-sql-driver/mysql v1.7.1
 	github.com/opentracing/opentracing-go v1.2.0
 	github.com/stretchr/testify v1.9.0
 	github.com/zeebo/assert v1.3.1

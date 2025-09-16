@@ -24,3 +24,24 @@ metric:
     enabled: false
 
 
+orders_mysql_config:
+  host: $DB_HOST
+  port: 3306
+  user: $DB_USER
+  password: $DB_PASSWORD
+  database: $DB_NAME
+  max_open_connections: 10
+  max_idle_connections: 10
+  connection_max_lifetime_sec: 1000
+  connection_max_idle_time_sec: 1000
+
+orders_ro_mysql_config:
+  host: $DB_HOST_1
+  port: 3306
+  user: $DB_USER_1
+  password: $DB_PASSWORD_1
+  database: $DB_NAME_1
+  max_open_connections: 10
+  max_idle_connections: 10
+  connection_max_lifetime_sec: 1000
+  connection_max_idle_time_sec: 1000
