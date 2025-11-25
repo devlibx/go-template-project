@@ -3,6 +3,7 @@ package consumers
 import (
 	"context"
 	"github.com/devlibx/gox-base/v2"
+	"github.com/devlibx/gox-base/v2/errors"
 	goxMessaging "github.com/devlibx/gox-messaging/v2"
 	"github.com/devlibx/gox-messaging/v2/factory"
 	"go.uber.org/fx"
@@ -23,6 +24,9 @@ func NewMessagingFactoryLifecycle(lifecycle fx.Lifecycle, cf gox.CrossFunction, 
 
 			// Start messaging
 			err := service.Start(*configuration)
+			if err != nil {
+				return errors.Wrap(err, "failed to start messaging service")
+			}
 
 			// Metric publisher depends on this so we need to start it here when messaging is running
 			if p, ok := cf.Publisher().(*Publisher); ok {
