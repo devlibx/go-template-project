@@ -19,8 +19,12 @@ type messagingServiceImpl struct {
 }
 
 func NewMessagingFactoryLifecycle(lifecycle fx.Lifecycle, cf gox.CrossFunction, configuration *goxMessaging.Configuration, service MessagingFactory) {
+	var cancelFunc context.CancelFunc
 	lifecycle.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
+
+			// Keep this so that we can call cancelFunc when we get stop
+			ctx, cancelFunc = context.WithCancel(ctx)
 
 			// Start messaging
 			err := service.Start(*configuration)
@@ -36,6 +40,9 @@ func NewMessagingFactoryLifecycle(lifecycle fx.Lifecycle, cf gox.CrossFunction, 
 			return err
 		},
 		OnStop: func(ctx context.Context) error {
+			if cancelFunc != nil {
+				cancelFunc()
+			}
 			return service.Stop()
 		},
 	})
