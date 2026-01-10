@@ -26,7 +26,7 @@ type e2eTestSuite struct {
 }
 
 func (s *e2eTestSuite) SetupSuite() {
-	env.SetupE2ETestEnv()
+	env.SetupE2ETestEnv(map[string]string{}, env.DefaultEnvSetupFunc())
 
 	// Setup random ports for testing - you can simulate TEST service on this port
 	go func() {
