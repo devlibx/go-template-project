@@ -133,7 +133,7 @@ func newApplicationEntryPoint(lc fx.Lifecycle, serverImpl ServerImpl, serverSign
 					if e != nil {
 						serverSignal.StartedCh <- e
 						close(serverSignal.StartedCh)
-						slog.Error("Server failed to start...", e)
+						slog.Error("Server failed to start...", "error", e)
 						return e
 					} else {
 						serverSignal.StartedCh <- nil

@@ -3,6 +3,7 @@ package go_template_project
 import (
 	"bufio"
 	_ "embed"
+	"fmt"
 	"os"
 	"strings"
 )
@@ -28,6 +29,7 @@ func DefaultEnvSetupFunc() EnvSetupFunc {
 	return func(envs map[string]string) {
 		for key, value := range envs {
 			_ = os.Setenv(key, value)
+			fmt.Printf("Setting %s to %s\n", key, value)
 		}
 	}
 }
